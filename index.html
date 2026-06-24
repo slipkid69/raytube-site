@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RayTube.video</title>
+<meta name="description" content="RayTube.video — friendly independent broadcasts from outside the algorithm."/>
+<meta name="robots" content="index, follow"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
+<link rel="canonical" href="https://raytube.video/"/>
+
+<!-- Open Graph / link preview -->
+<meta property="og:title" content="RayTube.video"/>
+<meta property="og:type" content="website"/>
+<meta property="og:description" content="Friendly independent broadcasts. Strange signals welcome."/>
+<meta property="og:url" content="https://raytube.video/"/>
+<meta property="og:image" content="https://img.youtube.com/vi/tfCtQt0exK8/maxresdefault.jpg"/>
+
+<style>
+/* ============================================================
+   RAYTUBE.VIDEO — BACKGROUND IMAGE VERSION
+   Requires raytube-mascot.webp next to this index.html.
+
+   RAYTUBE.VIDEO — SINGLE-FILE EDITABLE VERSION
+   Edit this file in Notepad / GitHub, then commit/upload.
+   Most changes you need are in the EDITABLE VIDEO LIST below.
+   ============================================================ */
+
+:root {
+  --bg: #061015;
+  --panel: rgba(9, 28, 37, 0.46);
+  --panel2: rgba(15, 43, 55, 0.54);
+  --text: #ecfeff;
+  --muted: #a6c9cf;
+  --line: rgba(126, 238, 255, 0.25);
+  --ray: #76f4ff;
+  --gold: #ffcf5a;
+  --pink: #ff7adf;
+  --green: #98ffcb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+
+  /*
+     BACKGROUND IMAGE:
+     Keep raytube-mascot.webp in the same GitHub folder as index.html.
+  */
+  background:
+    linear-gradient(180deg, rgba(3, 6, 12, 0.45), rgba(3, 6, 12, 0.78)),
+    url("raytube-mascot.webp") center top / cover fixed no-repeat,
+    #061015;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.014) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+
+a { color: inherit; }
+
+.site-header {
+  width: min(1180px, calc(100% - 32px));
+  margin: 18px auto 0;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  position: sticky;
+  top: 14px;
+  z-index: 20;
+  border: 1px solid var(--line);
+  background: rgba(3, 13, 18, 0.42);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  box-shadow: 0 18px 55px rgba(0,0,0,0.28);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-size: 1.08rem;
+}
+
+.brand-mark {
+  color: var(--gold);
+  text-shadow: 0 0 18px var(--gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(8,121,255,0.34), rgba(255,79,216,0.26));
+  border: 1px solid rgba(236,254,255,0.16);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: #ffffff;
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(255,207,90,0.42), rgba(8,121,255,0.38), rgba(255,79,216,0.36));
+  border-color: rgba(255,207,90,0.58);
+  box-shadow: 0 0 20px rgba(118,244,255,0.16);
+}
+
+.nav-links a:active {
+  transform: translateY(0) scale(0.98);
+}
+
+main {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.hero {
+  min-height: 76vh;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 34px;
+  align-items: center;
+  padding: 72px 0 42px;
+}
+
+.eyebrow {
+  color: var(--ray);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1 {
+  font-size: clamp(3rem, 9vw, 6.8rem);
+  line-height: 0.88;
+  letter-spacing: -0.08em;
+  margin-bottom: 24px;
+  text-shadow: 0 0 42px rgba(118,244,255,0.20);
+}
+
+h2 {
+  font-size: clamp(2rem, 4.5vw, 4.1rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: 1.18rem;
+  margin-bottom: 10px;
+}
+
+.hero-text,
+.section-heading p,
+.feature-copy p,
+.about-panel p,
+.submit-panel p,
+.video-card p,
+.channel-card p,
+.submit-panel li {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.hero-text {
+  font-size: 1.16rem;
+  max-width: 58ch;
+}
+
+
+.creator-line {
+  color: var(--gold);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 12px 0 22px;
+  text-shadow: 0 0 18px rgba(255,207,90,0.20);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 30px 0 26px;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0 18px;
+  font-weight: 900;
+  border: 1px solid rgba(236,254,255,0.34);
+  color: #ffffff;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.button.primary {
+  background: linear-gradient(135deg, #0879ff, #06d6d6 48%, #ff4fd8);
+  box-shadow: 0 0 34px rgba(118,244,255,0.28);
+}
+
+.button.ghost {
+  background: linear-gradient(135deg, rgba(255,74,210,0.78), rgba(117,73,255,0.72));
+  box-shadow: 0 0 28px rgba(255,122,223,0.20);
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255,207,90,0.88);
+  box-shadow: 0 0 42px rgba(255,207,90,0.26), 0 14px 32px rgba(0,0,0,0.24);
+}
+
+.button.primary:hover,
+.button.primary:focus-visible {
+  background: linear-gradient(135deg, #ff4fd8, #06d6d6 48%, #ffcf5a);
+}
+
+.button.ghost:hover,
+.button.ghost:focus-visible {
+  background: linear-gradient(135deg, #ffcf5a, #ff4fd8 54%, #0879ff);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.signal-strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.signal-strip span {
+  border: 1px solid rgba(236,254,255,0.24);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: linear-gradient(135deg, rgba(118,244,255,0.22), rgba(255,122,223,0.22));
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.signal-strip span:nth-child(2) {
+  background: linear-gradient(135deg, rgba(255,207,90,0.24), rgba(118,244,255,0.20));
+}
+
+.signal-strip span:nth-child(3) {
+  background: linear-gradient(135deg, rgba(255,122,223,0.28), rgba(152,255,203,0.18));
+}
+
+.signal-strip span:nth-child(4) {
+  background: linear-gradient(135deg, rgba(152,255,203,0.22), rgba(8,121,255,0.22));
+}
+
+.signal-strip span:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,207,90,0.62);
+  box-shadow: 0 0 22px rgba(255,207,90,0.14);
+}
+
+.hero-card {
+  min-height: 420px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 34px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(118,244,255,0.12), transparent 12rem),
+    linear-gradient(145deg, rgba(18,55,70,0.18), rgba(6,16,21,0.20));
+  backdrop-filter: blur(3px);
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.24), 0 0 70px rgba(90,226,255,0.12);
+}
+
+.hero-card:hover,
+.hero-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(255,207,90,0.62);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,207,90,0.18), transparent 12rem),
+    linear-gradient(145deg, rgba(255,122,223,0.18), rgba(6,16,21,0.24));
+  box-shadow: 0 28px 90px rgba(0,0,0,0.28), 0 0 82px rgba(255,207,90,0.18);
+}
+
+.crt-face {
+  display: none;
+  width: min(320px, 78%);
+  aspect-ratio: 1;
+  border-radius: 42px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(236,254,255,0.10), rgba(118,244,255,0.04)),
+    #0d2530;
+  border: 6px solid rgba(236,254,255,0.20);
+  box-shadow: inset 0 0 50px rgba(118,244,255,0.18), 0 0 50px rgba(118,244,255,0.28);
+}
+
+.crt-face::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border-radius: 30px;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 6px),
+    radial-gradient(circle at center, rgba(118,244,255,0.28), rgba(6,16,21,0.65));
+}
+
+.crt-eyes {
+  position: relative;
+  display: flex;
+  gap: 46px;
+  z-index: 2;
+  margin-bottom: 28px;
+}
+
+.crt-eyes span {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: block;
+  background: var(--gold);
+  box-shadow: 0 0 22px var(--gold);
+}
+
+.crt-smile {
+  position: absolute;
+  z-index: 2;
+  width: 90px;
+  height: 44px;
+  border-bottom: 9px solid var(--gold);
+  border-radius: 0 0 80px 80px;
+  bottom: 100px;
+  box-shadow: 0 12px 18px -16px var(--gold);
+}
+
+
+.mini-mascot {
+  width: min(360px, 82%);
+  aspect-ratio: 1 / 1;
+  border-radius: 34px;
+  border: 1px solid rgba(236,254,255,0.38);
+  background:
+    linear-gradient(180deg, rgba(4,14,19,0.05), rgba(4,14,19,0.25)),
+    url("raytube-mascot.webp") 9% center / 245% auto no-repeat;
+  box-shadow:
+    inset 0 0 34px rgba(118,244,255,0.18),
+    0 18px 55px rgba(0,0,0,0.34),
+    0 0 45px rgba(255,122,223,0.16);
+  transform: translateY(-8px);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-position 180ms ease;
+}
+
+.hero-card:hover .mini-mascot,
+.hero-card:focus-within .mini-mascot {
+  transform: translateY(-12px) scale(1.025);
+  border-color: rgba(255,207,90,0.72);
+  background-position: 8% center;
+  box-shadow:
+    inset 0 0 38px rgba(118,244,255,0.22),
+    0 22px 70px rgba(0,0,0,0.38),
+    0 0 58px rgba(255,207,90,0.24);
+}
+
+.status-pill {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(8,121,255,0.66), rgba(255,79,216,0.54));
+  border: 1px solid rgba(236,254,255,0.32);
+  padding: 10px 13px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  font-weight: 900;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.hero-card:hover .status-pill {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(255,207,90,0.72), rgba(255,79,216,0.58));
+  border-color: rgba(255,207,90,0.72);
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--green);
+  border-radius: 99px;
+  box-shadow: 0 0 16px var(--green);
+}
+
+.section {
+  padding: 72px 0;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+
+.channel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.channel-card,
+.video-card,
+.video-shell,
+.about-panel,
+.submit-panel {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 12px 38px rgba(0,0,0,0.22);
+  backdrop-filter: blur(8px);
+}
+
+
+.channel-card,
+.video-card,
+.about-panel,
+.submit-panel,
+.video-shell {
+  transition:
+    transform 170ms ease,
+    background 170ms ease,
+    border-color 170ms ease,
+    box-shadow 170ms ease;
+}
+
+.channel-card:hover,
+.channel-card:focus-within,
+.video-card:hover,
+.video-card:focus-within,
+.about-panel:hover,
+.about-panel:focus-within,
+.submit-panel:hover,
+.submit-panel:focus-within,
+.video-shell:hover,
+.video-shell:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(255,207,90,0.62);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,207,90,0.12), transparent 18rem),
+    radial-gradient(circle at 88% 22%, rgba(255,122,223,0.12), transparent 18rem),
+    rgba(9, 28, 37, 0.62);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.30), 0 0 35px rgba(118,244,255,0.12);
+}
+
+.channel-card:active,
+.video-card:active,
+.about-panel:active,
+.submit-panel:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+.channel-card:hover .channel-icon,
+.channel-card:focus-within .channel-icon {
+  background: linear-gradient(135deg, rgba(8,121,255,0.36), rgba(255,79,216,0.34));
+  border-color: rgba(255,207,90,0.58);
+}
+
+.channel-card {
+  min-height: 245px;
+  padding: 22px;
+  position: relative;
+  isolation: isolate;
+}
+
+.channel-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.42;
+}
+
+.channel-a::before { background: radial-gradient(circle at 10% 10%, rgba(118,244,255,0.56), transparent 13rem); }
+.channel-b::before { background: radial-gradient(circle at 90% 20%, rgba(255,207,90,0.48), transparent 13rem); }
+.channel-c::before { background: radial-gradient(circle at 50% 10%, rgba(255,121,218,0.48), transparent 13rem); }
+.channel-d::before { background: radial-gradient(circle at 20% 80%, rgba(152,255,203,0.34), transparent 13rem); }
+.channel-e::before { background: radial-gradient(circle at 80% 80%, rgba(118,244,255,0.34), transparent 13rem); }
+.channel-f::before { background: radial-gradient(circle at 50% 50%, rgba(255,207,90,0.34), transparent 13rem); }
+
+.channel-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  margin-bottom: 26px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--line);
+  color: var(--gold);
+  font-size: 1.6rem;
+}
+
+.card-kicker {
+  color: var(--gold);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.feature-section {
+  display: grid;
+  grid-template-columns: 0.72fr 1.28fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.video-shell {
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(circle at 30% 10%, rgba(255,207,90,0.18), transparent 16rem),
+    radial-gradient(circle at 80% 20%, rgba(118,244,255,0.20), transparent 18rem),
+    rgba(7,16,21,0.48);
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+}
+
+.video-shell iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.video-card {
+  padding: 18px;
+}
+
+.video-card a {
+  text-decoration: none;
+}
+
+.thumb {
+  min-height: 165px;
+  border-radius: 18px;
+  margin-bottom: 16px;
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: #10242e;
+}
+
+.category-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--gold);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+}
+
+.about-panel,
+.submit-panel {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 28px;
+  padding: 32px;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(118,244,255,0.12), transparent 26rem),
+    var(--panel2);
+}
+
+.submit-panel ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+.submit-panel li {
+  margin-bottom: 8px;
+}
+
+.footer {
+  width: min(1180px, calc(100% - 32px));
+  margin: 24px auto 38px;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  display: flex;
+  gap: 14px;
+}
+
+.footer a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(8,121,255,0.32), rgba(255,79,216,0.28));
+  border: 1px solid rgba(236,254,255,0.18);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.footer a:hover,
+.footer a:focus-visible {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(255,207,90,0.42), rgba(255,79,216,0.32));
+  border-color: rgba(255,207,90,0.58);
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .feature-section,
+  .about-panel,
+  .submit-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .channel-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nav-links {
+    font-size: 0.86rem;
+  }
+
+  .channel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 17vw, 4.4rem);
+  }
+}
+
+@media (max-width: 620px) {
+  .mini-mascot {
+    width: min(300px, 86%);
+    background-size: 270% auto;
+  }
+}
+
+
+/* ============================================================
+   RAYTUBE 100-SLOT SIGNAL RACK
+   Small boxes for future videos. Paste YouTube links into slots.
+   ============================================================ */
+
+.video-grid {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+}
+
+.video-card {
+  min-height: 255px;
+  cursor: pointer;
+}
+
+.video-card.empty-slot {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  min-height: 210px;
+  border-style: dashed;
+  color: var(--muted);
+  background:
+    radial-gradient(circle at 50% 10%, rgba(118,244,255,0.10), transparent 8rem),
+    rgba(9, 28, 37, 0.30);
+}
+
+.video-card.empty-slot:hover {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255,207,90,0.16), transparent 8rem),
+    rgba(9, 28, 37, 0.56);
+}
+
+.video-card.empty-slot .slot-number {
+  color: var(--gold);
+  font-weight: 900;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.video-card.empty-slot .slot-help {
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.video-card .watch-here {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(8,121,255,0.78), rgba(255,79,216,0.66));
+  border: 1px solid rgba(236,254,255,0.24);
+}
+
+.video-card:hover .watch-here {
+  background: linear-gradient(135deg, rgba(255,207,90,0.82), rgba(255,79,216,0.70));
+}
+
+.player-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(10px);
+}
+
+.player-modal.open {
+  display: flex;
+}
+
+.player-box {
+  width: min(980px, 96vw);
+  border: 1px solid rgba(126,238,255,0.34);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(118,244,255,0.14), transparent 20rem),
+    rgba(3,13,18,0.92);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 90px rgba(0,0,0,0.58), 0 0 70px rgba(118,244,255,0.16);
+}
+
+.player-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(126,238,255,0.22);
+}
+
+.player-top strong {
+  color: #ffffff;
+}
+
+.close-player {
+  border: 1px solid rgba(236,254,255,0.24);
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255,79,216,0.72), rgba(8,121,255,0.66));
+  padding: 8px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.close-player:hover {
+  background: linear-gradient(135deg, rgba(255,207,90,0.82), rgba(255,79,216,0.70));
+}
+
+.modal-video {
+  aspect-ratio: 16 / 9;
+  background: #05090c;
+}
+
+.modal-video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+
+/* Floating back-to-top button */
+.floating-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 160;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  min-height: 54px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(236,254,255,0.34);
+  background: linear-gradient(135deg, rgba(8,121,255,0.82), rgba(255,79,216,0.74));
+  box-shadow: 0 16px 42px rgba(0,0,0,0.34), 0 0 32px rgba(118,244,255,0.18);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.floating-top:hover,
+.floating-top:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(255,207,90,0.78);
+  background: linear-gradient(135deg, rgba(255,207,90,0.88), rgba(255,79,216,0.78), rgba(8,121,255,0.76));
+  box-shadow: 0 18px 52px rgba(0,0,0,0.40), 0 0 42px rgba(255,207,90,0.22);
+}
+
+.floating-top:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+@media (max-width: 620px) {
+  .floating-top {
+    right: 14px;
+    bottom: 14px;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 13px;
+    font-size: 0.88rem;
+  }
+}
+
+</style>
+</head>
+
+<body>
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="RayTube home">
+    <span class="brand-mark">◉</span>
+    <span>RayTube</span>
+  </a>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="#channels">Channels</a>
+    <a href="#featured">Featured</a>
+    <a href="#latest">Latest</a>
+    <a href="#submit">Submit</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Independent video broadcasts</p>
+      <h1>Friendly signals from outside the algorithm.</h1>
+      <p class="hero-text">
+        RayTube.video is a retro-future broadcast archive for videos, visual experiments,
+        stories, satire, essays, odd art, and creative transmissions from independent makers.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button primary" href="#channels">Explore broadcast channels</a>
+        <a class="button ghost" href="#submit">Submit a signal</a>
+      </div>
+
+      <div class="signal-strip" aria-label="RayTube tags">
+        <span>Video archive</span>
+        <span>Open broadcasts</span>
+        <span>Creative signals</span>
+        <span>Embedded videos</span>
+      </div>
+    </div>
+
+    <div class="hero-card" aria-label="Friendly RayTube CRT mascot">
+      <div class="mini-mascot" role="img" aria-label="RayTube mascot"></div>
+      <div class="status-pill"><span class="live-dot"></span> Signal online</div>
+    </div>
+  </section>
+
+  <section id="channels" class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Broadcast channels</p>
+      <h2>Open channels, not locked kingdoms.</h2>
+      <p>
+        These channels are neutral containers. They can hold your videos first, then later include
+        selected work from other creators if RayTube grows into a small shared archive.
+      </p>
+    </div>
+
+    <div class="channel-grid">
+      <article class="channel-card channel-a">
+        <div class="channel-icon">✦</div>
+        <p class="card-kicker">Original video</p>
+        <h3>Featured Signals</h3>
+        <p>Selected videos from the archive: strong concepts, memorable worlds, and front-page broadcasts.</p>
+      </article>
+
+      <article class="channel-card channel-b">
+        <div class="channel-icon">◌</div>
+        <p class="card-kicker">Stories / worlds</p>
+        <h3>Strange Worlds</h3>
+        <p>Sci-fi, horror, fantasy, fictional universes, lore, character pieces, and cinematic experiments.</p>
+      </article>
+
+      <article class="channel-card channel-c">
+        <div class="channel-icon">▣</div>
+        <p class="card-kicker">Art / visual media</p>
+        <h3>Visual Experiments</h3>
+        <p>AI-assisted art, animation tests, thumbnail worlds, image essays, music visuals, and design signals.</p>
+      </article>
+
+      <article class="channel-card channel-d">
+        <div class="channel-icon">☊</div>
+        <p class="card-kicker">Satire / commentary</p>
+        <h3>Signal & Static</h3>
+        <p>Satire, culture, platform criticism, machine weirdness, comic venom, and anti-beige transmissions.</p>
+      </article>
+
+      <article class="channel-card channel-e">
+        <div class="channel-icon">?</div>
+        <p class="card-kicker">Learning / explanation</p>
+        <h3>Essays & Explainers</h3>
+        <p>Concept videos, tutorials, philosophical notes, creative process, practical guides, and clear thinking.</p>
+      </article>
+
+      <article class="channel-card channel-f">
+        <div class="channel-icon">↗</div>
+        <p class="card-kicker">Community</p>
+        <h3>Guest Broadcasts</h3>
+        <p>A future shelf for approved creators, friends, collaborators, and independent makers worth amplifying.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="featured" class="section feature-section">
+    <div class="feature-copy">
+      <p class="eyebrow">Featured broadcast</p>
+      <h2 id="featured-title">Featured video</h2>
+      <p id="featured-description">
+        RayTube can begin as a curated front door. Videos can be embedded from YouTube,
+        Odysee, PeerTube, or another host while RayTube gives them a cleaner identity and home.
+      </p>
+      <p id="featured-creators" class="creator-line"></p>
+      <a class="button primary" href="#latest">Browse latest transmissions</a>
+    </div>
+
+    <div class="video-shell" id="featured-video"></div>
+  </section>
+
+  <section id="latest" class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Archive feed</p>
+      <h2>Latest transmissions</h2>
+      <p>
+        This is the RayTube signal rack. Empty slots are waiting for YouTube links.
+        To add a video, paste a YouTube URL into one slot near the bottom of this file.
+      </p>
+    </div>
+
+    <div class="video-grid" id="video-grid"></div>
+  </section>
+
+  <section id="submit" class="section submit-panel">
+    <div>
+      <p class="eyebrow">Submit a signal</p>
+      <h2>RayTube can invite others without hosting their files.</h2>
+    </div>
+    <div class="submit-copy">
+      <p>
+        Other creators would not need to upload huge files to your server at first. They could send a video link
+        from YouTube, Odysee, PeerTube, or another public video host. RayTube could then embed approved videos
+        into curated pages.
+      </p>
+      <ul>
+        <li>Creator sends title, description, video link, thumbnail, and permission to embed.</li>
+        <li>You approve what fits RayTube.</li>
+        <li>The video appears on RayTube inside the right broadcast channel.</li>
+        <li>The original host still handles streaming and bandwidth.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="about" class="section about-panel">
+    <div>
+      <p class="eyebrow">About RayTube</p>
+      <h2>A friendly archive front door.</h2>
+    </div>
+    <div>
+      <p>
+        RayTube.video is an independent broadcast archive built to give creative videos a home outside
+        the usual platform noise. It starts as a single editable HTML page with embedded videos, keeping it
+        light, affordable, and easy to update through GitHub. Over time it can grow into a curated video hub,
+        a creator showcase, or eventually a self-hosted video platform if the archive needs its own engine.
+      </p>
+      <p>
+        The name RayTube comes from James’s love of old screens and broadcast technology: cathode-ray tube
+        televisions, chunky CRT monitors, glowing glass, scanlines, phosphor light, and the warm feeling of
+        retro machines with worlds inside them. “Ray” carries the sense of light, signal, beam, and transmission.
+        “Tube” nods to both the old cathode-ray tube and modern video culture. Together, RayTube means old
+        television soul meeting current and future video technology: a friendly signal box for independent broadcasts.
+      </p>
+    </div>
+  </section>
+</main>
+
+
+<div class="player-modal" id="player-modal" aria-hidden="true">
+  <div class="player-box" role="dialog" aria-modal="true" aria-label="RayTube video player">
+    <div class="player-top">
+      <strong id="modal-title">RayTube Player</strong>
+      <button class="close-player" type="button" onclick="closePlayer()">Close</button>
+    </div>
+    <div class="modal-video" id="modal-video"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>© <span id="year"></span> RayTube.video — independent broadcasts and friendly signals.</p>
+  <p class="footer-links">
+    <a href="#top">Back to top</a>
+    <a href="#channels">Channels</a>
+    <a href="#submit">Submit</a>
+  </p>
+</footer>
+
+<script>
+/* ============================================================
+   EDITABLE VIDEO LIST
+   Add new videos here.
+
+   EASY METHOD:
+   Each slot has youtubeUrl: "".
+   Paste the full YouTube link between the quotes.
+   You do not need to extract the video ID yourself.
+
+   Example:
+   youtubeUrl: "https://youtu.be/tfCtQt0exK8?si=whatever"
+
+   Then edit the title, category, description, and creators.
+   Put featured: true on the one you want in the big featured player.
+   Usually only one slot should have featured: true.
+   ============================================================ */
+
+const videos = [
+  {
+    slot: 1,
+    title: "First RayTube Broadcast",
+    category: "Featured Signals",
+    description: "The first embedded broadcast on RayTube.video.",
+    youtubeUrl: "https://youtu.be/tfCtQt0exK8?si=uOtnAUUWE79Ze33V",
+    creators: "James & Logos",
+    featured: true
+  },
+  {
+    slot: 2,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 3,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 4,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 5,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 6,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 7,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 8,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 9,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 10,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 11,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 12,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 13,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 14,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 15,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 16,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 17,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 18,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 19,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 20,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 21,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 22,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 23,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 24,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 25,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 26,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 27,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 28,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 29,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 30,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 31,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 32,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 33,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 34,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 35,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 36,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 37,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 38,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 39,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 40,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 41,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 42,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 43,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 44,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 45,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 46,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 47,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 48,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 49,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 50,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 51,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 52,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 53,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 54,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 55,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 56,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 57,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 58,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 59,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 60,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 61,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 62,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 63,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 64,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 65,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 66,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 67,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 68,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 69,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 70,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 71,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 72,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 73,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 74,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 75,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 76,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 77,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 78,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 79,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 80,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 81,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 82,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 83,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 84,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 85,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 86,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 87,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 88,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 89,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 90,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 91,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 92,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 93,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 94,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 95,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 96,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 97,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 98,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 99,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  },
+  {
+    slot: 100,
+    title: "",
+    category: "Featured Signals",
+    description: "",
+    youtubeUrl: "",
+    creators: "James & Logos",
+    featured: false
+  }
+];
+
+/* ============================================================
+   SITE SCRIPT — you normally do not need to edit below here.
+   ============================================================ */
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function extractYouTubeId(value) {
+  if (!value) return "";
+
+  const text = String(value).trim();
+
+  // If James pastes only the video ID, this still works.
+  if (/^[a-zA-Z0-9_-]{11}$/.test(text)) return text;
+
+  try {
+    const url = new URL(text);
+
+    // Standard YouTube watch URL:
+    // https://www.youtube.com/watch?v=VIDEO_ID
+    const watchId = url.searchParams.get("v");
+    if (watchId) return watchId;
+
+    // Short YouTube URL:
+    // https://youtu.be/VIDEO_ID
+    if (url.hostname.includes("youtu.be")) {
+      return url.pathname.split("/").filter(Boolean)[0] || "";
+    }
+
+    // Embed or Shorts URL:
+    // https://www.youtube.com/embed/VIDEO_ID
+    // https://www.youtube.com/shorts/VIDEO_ID
+    const parts = url.pathname.split("/").filter(Boolean);
+    const embedIndex = parts.indexOf("embed");
+    const shortsIndex = parts.indexOf("shorts");
+
+    if (embedIndex !== -1 && parts[embedIndex + 1]) return parts[embedIndex + 1];
+    if (shortsIndex !== -1 && parts[shortsIndex + 1]) return parts[shortsIndex + 1];
+
+    return parts[0] || "";
+  } catch {
+    return text;
+  }
+}
+
+function videoId(video) {
+  return video.videoId || extractYouTubeId(video.youtubeUrl);
+}
+
+function youtubeThumb(id) {
+  return "https://img.youtube.com/vi/" + id + "/hqdefault.jpg";
+}
+
+function youtubeEmbed(id) {
+  return "https://www.youtube.com/embed/" + id + "?origin=https://raytube.video";
+}
+
+function hasVideo(video) {
+  return Boolean(videoId(video));
+}
+
+function renderFeatured() {
+  const filledVideos = videos.filter(hasVideo);
+  const featured = filledVideos.find(v => v.featured) || filledVideos[0];
+  if (!featured) return;
+
+  const id = videoId(featured);
+
+  document.getElementById("featured-title").textContent = featured.title || "Untitled RayTube Broadcast";
+  document.getElementById("featured-description").textContent = featured.description || "A RayTube broadcast.";
+  if (document.getElementById("featured-creators")) {
+    document.getElementById("featured-creators").textContent = "CREATORS: " + (featured.creators || "James & Logos");
+  }
+
+  document.getElementById("featured-video").innerHTML = `
+    <iframe
+      src="${youtubeEmbed(id)}"
+      title="${featured.title || "RayTube Broadcast"}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  `;
+}
+
+function openPlayer(video) {
+  const id = videoId(video);
+  if (!id) return;
+
+  document.getElementById("modal-title").textContent = video.title || "RayTube Broadcast";
+  document.getElementById("modal-video").innerHTML = `
+    <iframe
+      src="${youtubeEmbed(id)}&autoplay=1"
+      title="${video.title || "RayTube Broadcast"}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  `;
+
+  const modal = document.getElementById("player-modal");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closePlayer() {
+  const modal = document.getElementById("player-modal");
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.getElementById("modal-video").innerHTML = "";
+}
+
+function renderGrid() {
+  const grid = document.getElementById("video-grid");
+  grid.innerHTML = "";
+
+  videos.forEach(video => {
+    const id = videoId(video);
+    const slotNumber = video.slot || "";
+
+    if (!id) {
+      const empty = document.createElement("article");
+      empty.className = "video-card empty-slot";
+      empty.innerHTML = `
+        <div>
+          <span class="slot-number">Slot ${slotNumber}</span>
+          <span class="slot-help">Paste a YouTube link into this slot in index.html</span>
+        </div>
+      `;
+      grid.appendChild(empty);
+      return;
+    }
+
+    const card = document.createElement("article");
+    card.className = "video-card";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", "Play " + (video.title || "RayTube Broadcast") + " on RayTube");
+    card.innerHTML = `
+      <img class="thumb" src="${youtubeThumb(id)}" alt="${video.title || "RayTube Broadcast"}">
+      <span class="category-label">${video.category || "Featured Signals"}</span>
+      <h3>${video.title || "Untitled RayTube Broadcast"}</h3>
+      <p>${video.description || "A RayTube broadcast."}</p>
+      <p><strong>CREATORS:</strong> ${video.creators || "James & Logos"}</p>
+      <span class="watch-here">Play on RayTube</span>
+    `;
+    card.addEventListener("click", () => openPlayer(video));
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPlayer(video);
+      }
+    });
+    grid.appendChild(card);
+  });
+}
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closePlayer();
+});
+
+document.getElementById("player-modal").addEventListener("click", event => {
+  if (event.target.id === "player-modal") closePlayer();
+});
+
+renderFeatured();
+renderGrid();
+</script>
+
+<a class="floating-top" href="#top" aria-label="Back to top">↑ Top</a>
+
+</body>
+</html>
