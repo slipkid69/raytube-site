@@ -982,6 +982,78 @@ h3 {
   to { opacity: 1; transform: translateY(0); }
 }
 
+
+/* Native RayTube MP4 / R2 playback support */
+.video-shell video,
+.modal-video video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #05090c;
+}
+
+.modal-video video,
+.video-shell video {
+  object-fit: contain;
+}
+
+.native-thumb {
+  min-height: 165px;
+  border-radius: 18px;
+  margin-bottom: 16px;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(118,244,255,0.28), transparent 7rem),
+    radial-gradient(circle at 70% 65%, rgba(255,122,223,0.22), transparent 7rem),
+    linear-gradient(135deg, rgba(8,121,255,0.28), rgba(255,79,216,0.20)),
+    #10242e;
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.65);
+  position: relative;
+  overflow: hidden;
+}
+
+.native-thumb::before {
+  content: "▶";
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255,207,90,0.92), rgba(118,244,255,0.78));
+  color: #041014;
+  box-shadow: 0 0 34px rgba(255,207,90,0.34);
+  margin-bottom: 44px;
+}
+
+.native-thumb::after {
+  content: "RAYTUBE MP4";
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.source-badge {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  color: #041014;
+  background: linear-gradient(135deg, rgba(255,207,90,0.94), rgba(118,244,255,0.80));
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+  text-shadow: none;
+}
+
 </style>
 </head>
 
@@ -1104,8 +1176,8 @@ h3 {
       <p class="eyebrow">Archive feed</p>
       <h2>Latest transmissions</h2>
       <p>
-        This is the RayTube signal rack. Empty slots are waiting for YouTube links.
-        To add a video, paste a YouTube URL into one slot near the bottom of this file.
+        This is the RayTube signal rack. Empty slots can now use YouTube links or RayTube-hosted MP4 links.
+        To add a video, paste a YouTube URL or Cloudflare R2 MP4 URL into one slot near the bottom of this file.
       </p>
     </div>
 
@@ -1183,14 +1255,19 @@ h3 {
    Add new videos here.
 
    EASY METHOD:
-   Each slot has youtubeUrl: "".
-   Paste the full YouTube link between the quotes.
-   You do not need to extract the video ID yourself.
+   Each slot now supports YouTube and native RayTube MP4 playback.
 
-   Example:
-   youtubeUrl: "https://youtu.be/tfCtQt0exK8?si=whatever"
+   For YouTube:
+   Paste the full YouTube link into youtubeUrl: "".
 
-   Then edit the title, category, description, and creators.
+   For a Cloudflare R2 / RayTube-hosted MP4:
+   Paste the public MP4 link into mp4Url: "".
+
+   Optional:
+   Put an image link into thumbnailUrl: "" for MP4 cards.
+   If thumbnailUrl is empty, RayTube shows a built-in RayTube MP4 card.
+
+   If mp4Url and youtubeUrl both exist, RayTube uses mp4Url first.
    Put featured: true on the one you want in the big featured player.
    Usually only one slot should have featured: true.
    ============================================================ */
@@ -1202,6 +1279,8 @@ const videos = [
     category: "Featured Signals",
     description: "The first embedded broadcast on RayTube.video.",
     youtubeUrl: "https://youtu.be/tfCtQt0exK8?si=uOtnAUUWE79Ze33V",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: true
   },
@@ -1211,6 +1290,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/V_DKOTDskyk?si=hw-dDQ67VMWIntOj",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1220,6 +1301,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/vZI7GPSTAFU?si=Vhd0kALgjq1kR8vw",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1229,6 +1312,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/PJ4wGv2SwGE?si=oKYpSUtlfWMB-Pt-",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1238,6 +1323,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/RGfOd973FNs?si=AWkotWQwraHnUoUZ",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1247,6 +1334,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/ZuaSOqE_wKM?si=ZNzw6RmJlHGu0Pco",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1256,6 +1345,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/YYfRJwEI2vM?si=RwYUPWiwVpjLsi6L",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1265,6 +1356,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/2RYt254_jnY?si=lRYw0zcGfO_ZTwLX",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1274,6 +1367,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/PU-iab4C8I0?si=cY3d4fUFdkisXnx2",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1283,6 +1378,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/N9umCl7rcIE?si=Cz9Z3usC6QRT11KS",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1292,6 +1389,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/J0r_X9u4fFo?si=n2Ce_B7Aq8CbU0Tk",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1301,6 +1400,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/JyFbMWfGK0A?si=zTNaBSRXCjNwWBM-",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1310,6 +1411,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/H90ypj7HLX8?si=Sua5kmyXt51e057P",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1319,15 +1422,19 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "https://youtu.be/pBPb3bwCRkE?si=izFyJDhNjQtB-4Js",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
   {
     slot: 15,
-    title: "",
-    category: "Featured Signals",
-    description: "",
+    title: "PART 1 SCENE 1 DR HALE NIGHTMARE",
+    category: "RayTube Originals",
+    description: "A native RayTube-hosted MP4 test broadcast served from Cloudflare R2.",
     youtubeUrl: "",
+    mp4Url: "https://pub-155c982976404b0fb0bb0e9bd614fab0.r2.dev/PART%201%20SCENE%201%20DR%20HALE%20NIGHTMARE.mp4",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1337,6 +1444,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1346,6 +1455,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1355,6 +1466,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1364,6 +1477,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1373,6 +1488,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1382,6 +1499,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1391,6 +1510,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1400,6 +1521,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1409,6 +1532,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1418,6 +1543,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1427,6 +1554,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1436,6 +1565,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1445,6 +1576,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1454,6 +1587,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1463,6 +1598,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1472,6 +1609,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1481,6 +1620,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1490,6 +1631,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1499,6 +1642,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1508,6 +1653,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1517,6 +1664,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1526,6 +1675,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1535,6 +1686,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1544,6 +1697,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1553,6 +1708,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1562,6 +1719,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1571,6 +1730,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1580,6 +1741,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1589,6 +1752,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1598,6 +1763,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1607,6 +1774,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1616,6 +1785,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1625,6 +1796,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1634,6 +1807,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1643,6 +1818,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1652,6 +1829,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1661,6 +1840,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1670,6 +1851,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1679,6 +1862,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1688,6 +1873,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1697,6 +1884,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1706,6 +1895,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1715,6 +1906,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1724,6 +1917,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1733,6 +1928,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1742,6 +1939,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1751,6 +1950,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1760,6 +1961,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1769,6 +1972,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1778,6 +1983,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1787,6 +1994,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1796,6 +2005,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1805,6 +2016,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1814,6 +2027,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1823,6 +2038,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1832,6 +2049,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1841,6 +2060,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1850,6 +2071,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1859,6 +2082,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1868,6 +2093,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1877,6 +2104,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1886,6 +2115,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1895,6 +2126,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1904,6 +2137,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1913,6 +2148,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1922,6 +2159,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1931,6 +2170,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1940,6 +2181,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1949,6 +2192,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1958,6 +2203,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1967,6 +2214,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1976,6 +2225,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1985,6 +2236,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1994,6 +2247,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2003,6 +2258,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2012,6 +2269,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2021,6 +2280,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2030,6 +2291,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2039,6 +2302,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2048,6 +2313,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2057,6 +2324,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2066,6 +2335,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2075,6 +2346,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2084,6 +2357,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2093,6 +2368,8 @@ const videos = [
     category: "Featured Signals",
     description: "",
     youtubeUrl: "",
+    mp4Url: "",
+    thumbnailUrl: "",
     creators: "James & Logos",
     featured: false
   }
@@ -2151,6 +2428,22 @@ function videoId(video) {
   return video.videoId || extractYouTubeId(video.youtubeUrl);
 }
 
+function cleanUrl(value) {
+  return value ? String(value).trim() : "";
+}
+
+function videoSource(video) {
+  const mp4 = cleanUrl(video.mp4Url);
+  const hls = cleanUrl(video.hlsUrl);
+  const youtube = videoId(video);
+
+  if (mp4) return { type: "mp4", url: mp4, label: "RayTube MP4" };
+  if (hls) return { type: "hls", url: hls, label: "RayTube Stream" };
+  if (youtube) return { type: "youtube", id: youtube, label: "YouTube" };
+
+  return { type: "none", label: "" };
+}
+
 function youtubeThumb(id) {
   return "https://img.youtube.com/vi/" + id + "/hqdefault.jpg";
 }
@@ -2159,8 +2452,69 @@ function youtubeEmbed(id) {
   return "https://www.youtube.com/embed/" + id + "?origin=https://raytube.video";
 }
 
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function hasVideo(video) {
-  return Boolean(videoId(video));
+  return videoSource(video).type !== "none";
+}
+
+function renderVideoPlayer(video, autoplay = false) {
+  const source = videoSource(video);
+  const title = escapeHtml(video.title || "RayTube Broadcast");
+
+  if (source.type === "mp4") {
+    return `
+      <video controls playsinline preload="metadata" ${autoplay ? "autoplay" : ""}>
+        <source src="${escapeHtml(source.url)}" type="video/mp4">
+        Your browser does not support the RayTube MP4 player.
+      </video>
+    `;
+  }
+
+  if (source.type === "hls") {
+    return `
+      <video controls playsinline preload="metadata" ${autoplay ? "autoplay" : ""} src="${escapeHtml(source.url)}">
+        Your browser does not support this RayTube stream.
+      </video>
+    `;
+  }
+
+  if (source.type === "youtube") {
+    return `
+      <iframe
+        src="${youtubeEmbed(source.id)}${autoplay ? "&autoplay=1" : ""}"
+        title="${title}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    `;
+  }
+
+  return "";
+}
+
+function cardThumb(video) {
+  const source = videoSource(video);
+  const title = escapeHtml(video.title || "RayTube Broadcast");
+  const customThumb = cleanUrl(video.thumbnailUrl);
+
+  if (customThumb) {
+    return `<img class="thumb" src="${escapeHtml(customThumb)}" alt="${title}">`;
+  }
+
+  if (source.type === "youtube") {
+    return `<img class="thumb" src="${youtubeThumb(source.id)}" alt="${title}">`;
+  }
+
+  return `<div class="native-thumb" aria-label="${title}"></div>`;
 }
 
 function renderFeatured() {
@@ -2168,39 +2522,26 @@ function renderFeatured() {
   const featured = filledVideos.find(v => v.featured) || filledVideos[0];
   if (!featured) return;
 
-  const id = videoId(featured);
+  const source = videoSource(featured);
 
   document.getElementById("featured-title").textContent = featured.title || "Untitled RayTube Broadcast";
   document.getElementById("featured-description").textContent = featured.description || "A RayTube broadcast.";
   if (document.getElementById("featured-creators")) {
-    document.getElementById("featured-creators").textContent = "CREATORS: " + (featured.creators || "James & Logos");
+    document.getElementById("featured-creators").textContent =
+      "CREATORS: " + (featured.creators || "James & Logos") + " · SOURCE: " + source.label;
   }
 
-  document.getElementById("featured-video").innerHTML = `
-    <iframe
-      src="${youtubeEmbed(id)}"
-      title="${featured.title || "RayTube Broadcast"}"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>
-  `;
+  document.getElementById("featured-video").innerHTML = renderVideoPlayer(featured, false);
 }
 
 function openPlayer(video) {
-  const id = videoId(video);
-  if (!id) return;
+  if (!hasVideo(video)) return;
 
-  document.getElementById("modal-title").textContent = video.title || "RayTube Broadcast";
-  document.getElementById("modal-video").innerHTML = `
-    <iframe
-      src="${youtubeEmbed(id)}&autoplay=1"
-      title="${video.title || "RayTube Broadcast"}"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>
-  `;
+  const source = videoSource(video);
+  document.getElementById("modal-title").textContent =
+    (video.title || "RayTube Broadcast") + " · " + source.label;
+
+  document.getElementById("modal-video").innerHTML = renderVideoPlayer(video, true);
 
   const modal = document.getElementById("player-modal");
   modal.classList.add("open");
@@ -2232,16 +2573,16 @@ function renderGrid(page = currentRackPage) {
   grid.innerHTML = "";
 
   visibleVideos.forEach(video => {
-    const id = videoId(video);
+    const source = videoSource(video);
     const slotNumber = video.slot || "";
 
-    if (!id) {
+    if (source.type === "none") {
       const empty = document.createElement("article");
       empty.className = "video-card empty-slot";
       empty.innerHTML = `
         <div>
           <span class="slot-number">Slot ${slotNumber}</span>
-          <span class="slot-help">Paste a YouTube link into this slot in index.html</span>
+          <span class="slot-help">Paste a YouTube link or RayTube MP4 link into this slot in index.html</span>
         </div>
       `;
       grid.appendChild(empty);
@@ -2254,12 +2595,12 @@ function renderGrid(page = currentRackPage) {
     card.setAttribute("role", "button");
     card.setAttribute("aria-label", "Play " + (video.title || "RayTube Broadcast") + " on RayTube");
     card.innerHTML = `
-      <img class="thumb" src="${youtubeThumb(id)}" alt="${video.title || "RayTube Broadcast"}">
-      <span class="category-label">${video.category || "Featured Signals"}</span>
-      <h3>${video.title || "Untitled RayTube Broadcast"}</h3>
-      <p>${video.description || "A RayTube broadcast."}</p>
-      <p><strong>CREATORS:</strong> ${video.creators || "James & Logos"}</p>
-      <span class="watch-here">Play on RayTube</span>
+      ${cardThumb(video)}
+      <span class="category-label">${escapeHtml(video.category || "Featured Signals")}<span class="source-badge">${escapeHtml(source.label)}</span></span>
+      <h3>${escapeHtml(video.title || "Untitled RayTube Broadcast")}</h3>
+      <p>${escapeHtml(video.description || "A RayTube broadcast.")}</p>
+      <p><strong>CREATORS:</strong> ${escapeHtml(video.creators || "James & Logos")}</p>
+      <span class="watch-here">${source.type === "youtube" ? "Play YouTube pipe" : "Play RayTube native"}</span>
     `;
     card.addEventListener("click", () => openPlayer(video));
     card.addEventListener("keydown", event => {
