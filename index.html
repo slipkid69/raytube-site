@@ -904,6 +904,84 @@ h3 {
   }
 }
 
+
+/* ============================================================
+   RAYTUBE SIGNAL RACK PAGINATION
+   Keeps the 100-slot archive light by showing 10 slots at a time.
+   Each page is visually identical, with a small page/range marker.
+   ============================================================ */
+
+.rack-status {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 18px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(236,254,255,0.24);
+  background: linear-gradient(135deg, rgba(8,121,255,0.56), rgba(255,79,216,0.42));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.20), 0 0 28px rgba(118,244,255,0.10);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+}
+
+.rack-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 26px;
+}
+
+.rack-page-button,
+.rack-nav-button {
+  min-height: 42px;
+  border: 1px solid rgba(236,254,255,0.26);
+  border-radius: 999px;
+  color: #ffffff;
+  font-weight: 900;
+  padding: 0 14px;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(8,121,255,0.52), rgba(255,79,216,0.36));
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.rack-page-button:hover,
+.rack-nav-button:hover,
+.rack-page-button:focus-visible,
+.rack-nav-button:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255,207,90,0.72);
+  background: linear-gradient(135deg, rgba(255,207,90,0.72), rgba(255,79,216,0.54), rgba(8,121,255,0.52));
+  box-shadow: 0 14px 34px rgba(0,0,0,0.26), 0 0 28px rgba(255,207,90,0.16);
+}
+
+.rack-page-button.active {
+  border-color: rgba(255,207,90,0.92);
+  background: linear-gradient(135deg, rgba(255,207,90,0.92), rgba(118,244,255,0.68));
+  color: #041014;
+  text-shadow: none;
+}
+
+.rack-nav-button:disabled {
+  opacity: 0.36;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.video-card {
+  animation: signalSlotIn 180ms ease both;
+}
+
+@keyframes signalSlotIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 </head>
 
@@ -1031,7 +1109,9 @@ h3 {
       </p>
     </div>
 
+    <div class="rack-status" id="rack-status">Signal Rack — Page 1 of 10 · Slots 1–10</div>
     <div class="video-grid" id="video-grid"></div>
+    <div class="rack-controls" id="rack-controls" aria-label="RayTube signal rack pages"></div>
   </section>
 
   <section id="submit" class="section submit-panel">
@@ -1130,7 +1210,7 @@ const videos = [
     title: "",
     category: "Featured Signals",
     description: "",
-    youtubeUrl: "https://youtu.be/V_DKOTDskyk?si=lY88ScB67uqnWVSj",
+    youtubeUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1139,7 +1219,7 @@ const videos = [
     title: "",
     category: "Featured Signals",
     description: "",
-    youtubeUrl: "https://youtu.be/vZI7GPSTAFU?si=ZsnnbZ3SA41xijpc",
+    youtubeUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1148,7 +1228,7 @@ const videos = [
     title: "",
     category: "Featured Signals",
     description: "",
-    youtubeUrl: "https://youtu.be/PJ4wGv2SwGE?si=cuRbDkmicgRVIQvV",
+    youtubeUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -1157,7 +1237,7 @@ const videos = [
     title: "",
     category: "Featured Signals",
     description: "",
-    youtubeUrl: "https://youtu.be/RGfOd973FNs?si=MkE2Zr7x2lsVjnkp",
+    youtubeUrl: "",
     creators: "James & Logos",
     featured: false
   },
@@ -2018,6 +2098,9 @@ const videos = [
   }
 ];
 
+const slotsPerPage = 10;
+let currentRackPage = 1;
+
 /* ============================================================
    SITE SCRIPT — you normally do not need to edit below here.
    ============================================================ */
@@ -2131,11 +2214,24 @@ function closePlayer() {
   document.getElementById("modal-video").innerHTML = "";
 }
 
-function renderGrid() {
+function renderGrid(page = currentRackPage) {
   const grid = document.getElementById("video-grid");
+  const rackStatus = document.getElementById("rack-status");
+
+  currentRackPage = page;
+
+  const totalPages = Math.ceil(videos.length / slotsPerPage);
+  const startIndex = (currentRackPage - 1) * slotsPerPage;
+  const endIndex = Math.min(startIndex + slotsPerPage, videos.length);
+  const visibleVideos = videos.slice(startIndex, endIndex);
+
+  if (rackStatus) {
+    rackStatus.textContent = `Signal Rack — Page ${currentRackPage} of ${totalPages} · Slots ${startIndex + 1}–${endIndex}`;
+  }
+
   grid.innerHTML = "";
 
-  videos.forEach(video => {
+  visibleVideos.forEach(video => {
     const id = videoId(video);
     const slotNumber = video.slot || "";
 
@@ -2174,6 +2270,53 @@ function renderGrid() {
     });
     grid.appendChild(card);
   });
+
+  renderRackControls(totalPages);
+}
+
+function renderRackControls(totalPages) {
+  const controls = document.getElementById("rack-controls");
+  if (!controls) return;
+
+  controls.innerHTML = "";
+
+  const previous = document.createElement("button");
+  previous.type = "button";
+  previous.className = "rack-nav-button";
+  previous.textContent = "← Previous";
+  previous.disabled = currentRackPage === 1;
+  previous.addEventListener("click", () => changeRackPage(currentRackPage - 1));
+  controls.appendChild(previous);
+
+  for (let page = 1; page <= totalPages; page++) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "rack-page-button" + (page === currentRackPage ? " active" : "");
+    button.textContent = page;
+    button.setAttribute("aria-label", `Show RayTube slots ${(page - 1) * slotsPerPage + 1} to ${Math.min(page * slotsPerPage, videos.length)}`);
+    button.addEventListener("click", () => changeRackPage(page));
+    controls.appendChild(button);
+  }
+
+  const next = document.createElement("button");
+  next.type = "button";
+  next.className = "rack-nav-button";
+  next.textContent = "Next →";
+  next.disabled = currentRackPage === totalPages;
+  next.addEventListener("click", () => changeRackPage(currentRackPage + 1));
+  controls.appendChild(next);
+}
+
+function changeRackPage(page) {
+  const totalPages = Math.ceil(videos.length / slotsPerPage);
+  if (page < 1 || page > totalPages) return;
+
+  renderGrid(page);
+
+  const latestSection = document.getElementById("latest");
+  if (latestSection) {
+    latestSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 document.addEventListener("keydown", event => {
