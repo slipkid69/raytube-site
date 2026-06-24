@@ -1057,6 +1057,220 @@ h3 {
   text-shadow: none;
 }
 
+
+/* ============================================================
+   RAYTUBE CUSTOM VIDEO PLAYER
+   Replaces the browser-default MP4 controls with RayTube controls.
+   This hides the obvious download button, but public MP4 URLs are
+   still public files and are not DRM-protected.
+   ============================================================ */
+
+.raytube-player {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(118,244,255,0.16), transparent 16rem),
+    radial-gradient(circle at 82% 18%, rgba(255,122,223,0.12), transparent 16rem),
+    #05090c;
+  isolation: isolate;
+}
+
+.video-shell .raytube-player,
+.modal-video .raytube-player {
+  width: 100%;
+  height: 100%;
+}
+
+.raytube-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #05090c;
+}
+
+.raytube-player::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.035) 0 1px,
+      transparent 1px 4px
+    );
+  mix-blend-mode: screen;
+  opacity: 0.42;
+}
+
+.rt-brandbar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.78);
+}
+
+.rt-brandbar span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(236,254,255,0.20);
+  background: linear-gradient(135deg, rgba(8,121,255,0.48), rgba(255,79,216,0.34));
+  backdrop-filter: blur(10px);
+}
+
+.rt-brandbar span:first-child {
+  color: var(--gold);
+  border-color: rgba(255,207,90,0.40);
+  background: linear-gradient(135deg, rgba(255,207,90,0.18), rgba(8,121,255,0.36));
+}
+
+.rt-big-play {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  width: clamp(76px, 10vw, 106px);
+  height: clamp(76px, 10vw, 106px);
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255,207,90,0.78);
+  border-radius: 999px;
+  color: #041014;
+  background: linear-gradient(135deg, rgba(255,207,90,0.96), rgba(118,244,255,0.88), rgba(255,122,223,0.82));
+  box-shadow: 0 0 45px rgba(255,207,90,0.34), 0 18px 44px rgba(0,0,0,0.42);
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.rt-big-play:hover,
+.rt-big-play:focus-visible {
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 0 60px rgba(118,244,255,0.42), 0 20px 52px rgba(0,0,0,0.50);
+}
+
+.rt-big-play[hidden] {
+  display: none;
+}
+
+.rt-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto minmax(70px, 110px) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 42px 14px 12px;
+  background:
+    linear-gradient(180deg, transparent, rgba(0,0,0,0.62) 35%, rgba(0,0,0,0.90)),
+    linear-gradient(135deg, rgba(8,121,255,0.20), rgba(255,79,216,0.16));
+}
+
+.rt-controls button {
+  min-width: 42px;
+  min-height: 38px;
+  border: 1px solid rgba(236,254,255,0.24);
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(8,121,255,0.70), rgba(255,79,216,0.58));
+  font-weight: 900;
+  cursor: pointer;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.rt-controls button:hover,
+.rt-controls button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(255,207,90,0.72);
+  background: linear-gradient(135deg, rgba(255,207,90,0.82), rgba(255,79,216,0.70));
+}
+
+.rt-time {
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.75);
+}
+
+.rt-seek,
+.rt-volume {
+  width: 100%;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.rt-rights {
+  grid-column: 1 / -1;
+  color: rgba(236,254,255,0.78);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.75);
+}
+
+.raytube-player.is-playing .rt-controls {
+  opacity: 0.92;
+}
+
+.raytube-player:fullscreen {
+  background: #05090c;
+}
+
+@media (max-width: 620px) {
+  .rt-brandbar {
+    font-size: 0.64rem;
+  }
+
+  .rt-brandbar span:last-child {
+    display: none;
+  }
+
+  .rt-controls {
+    grid-template-columns: auto auto 1fr auto auto;
+    gap: 7px;
+    padding: 34px 10px 10px;
+  }
+
+  .rt-volume {
+    display: none;
+  }
+
+  .rt-rights {
+    display: none;
+  }
+
+  .rt-time {
+    font-size: 0.68rem;
+  }
+}
+
 </style>
 </head>
 
@@ -2519,20 +2733,40 @@ function renderVideoPlayer(video, autoplay = false) {
   const source = videoSource(video);
   const title = escapeHtml(video.title || "RayTube Broadcast");
 
-  if (source.type === "mp4") {
+  if (source.type === "mp4" || source.type === "hls") {
+    const mimeType = source.type === "hls" ? "application/x-mpegURL" : "video/mp4";
     return `
-      <video controls playsinline preload="metadata" ${autoplay ? "autoplay" : ""}>
-        <source src="${escapeHtml(source.url)}" type="video/mp4">
-        Your browser does not support the RayTube MP4 player.
-      </video>
-    `;
-  }
+      <div class="raytube-player" data-autoplay="${autoplay ? "true" : "false"}" data-source="${escapeHtml(source.label)}">
+        <video
+          class="raytube-video"
+          playsinline
+          preload="metadata"
+          controlsList="nodownload noremoteplayback"
+          disablePictureInPicture
+          oncontextmenu="return false"
+          ${autoplay ? "autoplay" : ""}
+        >
+          <source src="${escapeHtml(source.url)}" type="${mimeType}">
+          Your browser does not support the RayTube player.
+        </video>
 
-  if (source.type === "hls") {
-    return `
-      <video controls playsinline preload="metadata" ${autoplay ? "autoplay" : ""} src="${escapeHtml(source.url)}">
-        Your browser does not support this RayTube stream.
-      </video>
+        <div class="rt-brandbar" aria-hidden="true">
+          <span>◉ RayTube Player</span>
+          <span>${escapeHtml(source.label)}</span>
+        </div>
+
+        <button class="rt-big-play" type="button" aria-label="Play RayTube video">▶</button>
+
+        <div class="rt-controls" aria-label="RayTube video controls">
+          <button class="rt-play" type="button" aria-label="Play or pause">▶</button>
+          <span class="rt-time">0:00 / 0:00</span>
+          <input class="rt-seek" type="range" min="0" max="1000" value="0" aria-label="Seek video">
+          <button class="rt-mute" type="button" aria-label="Mute or unmute">🔊</button>
+          <input class="rt-volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+          <button class="rt-fullscreen" type="button" aria-label="Fullscreen">⛶</button>
+          <div class="rt-rights">© 2026 James Armstrong &amp; Logos / RayTube. All rights reserved. No downloading, copying, re-uploading, scraping, training, redistribution, or commercial use without written permission.</div>
+        </div>
+      </div>
     `;
   }
 
@@ -2567,6 +2801,112 @@ function cardThumb(video) {
   return `<div class="native-thumb" aria-label="${title}"></div>`;
 }
 
+
+function setupRayTubePlayers(root = document) {
+  root.querySelectorAll(".raytube-player").forEach(player => {
+    if (player.dataset.ready === "true") return;
+    player.dataset.ready = "true";
+
+    const video = player.querySelector(".raytube-video");
+    const play = player.querySelector(".rt-play");
+    const bigPlay = player.querySelector(".rt-big-play");
+    const seek = player.querySelector(".rt-seek");
+    const time = player.querySelector(".rt-time");
+    const mute = player.querySelector(".rt-mute");
+    const volume = player.querySelector(".rt-volume");
+    const fullscreen = player.querySelector(".rt-fullscreen");
+
+    if (!video || !play || !bigPlay || !seek || !time || !mute || !volume || !fullscreen) return;
+
+    const formatTime = seconds => {
+      if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+      const whole = Math.floor(seconds);
+      const mins = Math.floor(whole / 60);
+      const secs = String(whole % 60).padStart(2, "0");
+      return `${mins}:${secs}`;
+    };
+
+    const updateTime = () => {
+      const duration = Number.isFinite(video.duration) ? video.duration : 0;
+      const current = Number.isFinite(video.currentTime) ? video.currentTime : 0;
+      seek.value = duration ? Math.round((current / duration) * 1000) : 0;
+      time.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+    };
+
+    const updatePlayState = () => {
+      const isPlaying = !video.paused && !video.ended;
+      player.classList.toggle("is-playing", isPlaying);
+      play.textContent = isPlaying ? "❚❚" : "▶";
+      play.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
+      bigPlay.hidden = isPlaying;
+    };
+
+    const updateMuteState = () => {
+      const isMuted = video.muted || video.volume === 0;
+      mute.textContent = isMuted ? "🔇" : "🔊";
+      mute.setAttribute("aria-label", isMuted ? "Unmute" : "Mute");
+    };
+
+    const togglePlay = () => {
+      if (video.paused || video.ended) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+
+    player.addEventListener("contextmenu", event => event.preventDefault());
+    video.addEventListener("click", togglePlay);
+    play.addEventListener("click", togglePlay);
+    bigPlay.addEventListener("click", togglePlay);
+
+    video.addEventListener("play", updatePlayState);
+    video.addEventListener("pause", updatePlayState);
+    video.addEventListener("ended", updatePlayState);
+    video.addEventListener("loadedmetadata", updateTime);
+    video.addEventListener("durationchange", updateTime);
+    video.addEventListener("timeupdate", updateTime);
+
+    seek.addEventListener("input", () => {
+      const duration = Number.isFinite(video.duration) ? video.duration : 0;
+      if (!duration) return;
+      video.currentTime = (Number(seek.value) / 1000) * duration;
+    });
+
+    mute.addEventListener("click", () => {
+      video.muted = !video.muted;
+      updateMuteState();
+    });
+
+    volume.addEventListener("input", () => {
+      video.volume = Number(volume.value);
+      video.muted = video.volume === 0;
+      updateMuteState();
+    });
+
+    fullscreen.addEventListener("click", () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      } else if (player.requestFullscreen) {
+        player.requestFullscreen().catch(() => {});
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      fullscreen.textContent = document.fullscreenElement === player ? "⤢" : "⛶";
+    });
+
+    updateTime();
+    updatePlayState();
+    updateMuteState();
+
+    if (player.dataset.autoplay === "true") {
+      video.play().catch(() => {});
+    }
+  });
+}
+
+
 function renderFeatured() {
   const filledVideos = videos.filter(hasVideo);
   const featured = filledVideos.find(v => v.featured) || filledVideos[0];
@@ -2581,7 +2921,9 @@ function renderFeatured() {
       "CREATORS: " + (featured.creators || "James & Logos") + " · SOURCE: " + source.label;
   }
 
-  document.getElementById("featured-video").innerHTML = renderVideoPlayer(featured, false);
+  const featuredVideo = document.getElementById("featured-video");
+  featuredVideo.innerHTML = renderVideoPlayer(featured, false);
+  setupRayTubePlayers(featuredVideo);
 }
 
 function openPlayer(video) {
@@ -2591,7 +2933,9 @@ function openPlayer(video) {
   document.getElementById("modal-title").textContent =
     (video.title || "RayTube Broadcast") + " · " + source.label;
 
-  document.getElementById("modal-video").innerHTML = renderVideoPlayer(video, true);
+  const modalVideo = document.getElementById("modal-video");
+  modalVideo.innerHTML = renderVideoPlayer(video, true);
+  setupRayTubePlayers(modalVideo);
 
   const modal = document.getElementById("player-modal");
   modal.classList.add("open");
