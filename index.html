@@ -1239,6 +1239,33 @@ h3 {
   opacity: 0.92;
 }
 
+
+/* RayTube player auto-hide overlays while video is playing */
+.raytube-player .rt-brandbar,
+.raytube-player .rt-controls {
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    visibility 220ms ease;
+}
+
+.raytube-player.controls-hidden.is-playing .rt-brandbar {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+}
+
+.raytube-player.controls-hidden.is-playing .rt-controls {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(18px);
+}
+
+.raytube-player.controls-hidden.is-playing {
+  cursor: none;
+}
+
 .raytube-player:fullscreen {
   background: #05090c;
 }
@@ -2833,12 +2860,43 @@ function setupRayTubePlayers(root = document) {
       time.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
     };
 
+    let hideTimer = null;
+
+    const clearHideTimer = () => {
+      if (hideTimer) {
+        window.clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+    };
+
+    const showControls = () => {
+      player.classList.remove("controls-hidden");
+      clearHideTimer();
+
+      if (!video.paused && !video.ended) {
+        hideTimer = window.setTimeout(() => {
+          player.classList.add("controls-hidden");
+        }, 2600);
+      }
+    };
+
+    const keepControlsVisible = () => {
+      player.classList.remove("controls-hidden");
+      clearHideTimer();
+    };
+
     const updatePlayState = () => {
       const isPlaying = !video.paused && !video.ended;
       player.classList.toggle("is-playing", isPlaying);
       play.textContent = isPlaying ? "❚❚" : "▶";
       play.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
       bigPlay.hidden = isPlaying;
+
+      if (isPlaying) {
+        showControls();
+      } else {
+        keepControlsVisible();
+      }
     };
 
     const updateMuteState = () => {
@@ -2856,6 +2914,18 @@ function setupRayTubePlayers(root = document) {
     };
 
     player.addEventListener("contextmenu", event => event.preventDefault());
+    player.addEventListener("mousemove", showControls);
+    player.addEventListener("pointermove", showControls);
+    player.addEventListener("touchstart", showControls, { passive: true });
+    player.addEventListener("focusin", keepControlsVisible);
+    player.addEventListener("focusout", showControls);
+
+    const controls = player.querySelector(".rt-controls");
+    if (controls) {
+      controls.addEventListener("mouseenter", keepControlsVisible);
+      controls.addEventListener("mouseleave", showControls);
+    }
+
     video.addEventListener("click", togglePlay);
     play.addEventListener("click", togglePlay);
     bigPlay.addEventListener("click", togglePlay);
