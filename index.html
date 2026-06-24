@@ -907,6 +907,32 @@ h3 {
   }
 }
 
+.video-card.intro-card {
+  border-color: rgba(255,207,90,0.72);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,207,90,0.18), transparent 10rem),
+    radial-gradient(circle at 82% 22%, rgba(255,122,223,0.20), transparent 10rem),
+    radial-gradient(circle at 50% 72%, rgba(118,244,255,0.14), transparent 11rem),
+    rgba(9, 28, 37, 0.62);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.32), 0 0 36px rgba(255,207,90,0.18);
+}
+
+.video-card.intro-card h3::before {
+  content: "◉ ";
+  color: var(--gold);
+  text-shadow: 0 0 16px rgba(255,207,90,0.38);
+}
+
+.video-card.intro-card .watch-here {
+  background: linear-gradient(135deg, rgba(255,207,90,0.88), rgba(118,244,255,0.70), rgba(255,79,216,0.66));
+  color: #041014;
+  text-shadow: none;
+}
+
+.video-card.intro-card .source-badge {
+  background: linear-gradient(135deg, rgba(255,207,90,0.98), rgba(152,255,203,0.82));
+}
+
 
 /* ============================================================
    RAYTUBE SIGNAL RACK PAGINATION
@@ -1562,6 +1588,19 @@ h3 {
    Put featured: true on the one you want in the big featured player.
    Usually only one slot should have featured: true.
    ============================================================ */
+
+const introVideo = {
+  slot: "INTRO",
+  title: "WELCOME TO RAYTUBE",
+  category: "",
+  description: "A friendly hello from the little RayTube mascot. The signal is live, and the archive is waiting for you.",
+  youtubeUrl: "",
+  mp4Url: "https://pub-155c982976404b0fb0bb0e9bd614fab0.r2.dev/raytube-mascot-welcome.mp4",
+  thumbnailUrl: "https://pub-155c982976404b0fb0bb0e9bd614fab0.r2.dev/raytube-mascot-welcome.png",
+  creators: "RayTube Mascot",
+  featured: false,
+  isIntro: true
+};
 
 const videos = [
   {
@@ -2996,7 +3035,7 @@ function renderFeatured() {
   setupRayTubePlayers(featuredVideo);
 }
 
-function openPlayer(video) {
+function openPlayer(video, autoplay = true) {
   if (!hasVideo(video)) return;
 
   const source = videoSource(video);
@@ -3004,7 +3043,7 @@ function openPlayer(video) {
     (video.title || "RayTube Broadcast") + " · " + source.label;
 
   const modalVideo = document.getElementById("modal-video");
-  modalVideo.innerHTML = renderVideoPlayer(video, true);
+  modalVideo.innerHTML = renderVideoPlayer(video, autoplay);
   setupRayTubePlayers(modalVideo);
 
   const modal = document.getElementById("player-modal");
@@ -3017,6 +3056,46 @@ function closePlayer() {
   modal.classList.remove("open");
   modal.setAttribute("aria-hidden", "true");
   document.getElementById("modal-video").innerHTML = "";
+}
+
+function appendVideoCard(grid, video, extraClass = "") {
+  const source = videoSource(video);
+  const slotNumber = video.slot || "";
+
+  if (source.type === "none") {
+    const empty = document.createElement("article");
+    empty.className = "video-card empty-slot";
+    empty.innerHTML = `
+      <div>
+        <span class="slot-number">Slot ${slotNumber}</span>
+        <span class="slot-help">Paste a YouTube link or RayTube MP4 link into this slot in index.html</span>
+      </div>
+    `;
+    grid.appendChild(empty);
+    return;
+  }
+
+  const card = document.createElement("article");
+  card.className = ("video-card " + extraClass).trim();
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", "Play " + (video.title || "RayTube Broadcast") + " on RayTube");
+  card.innerHTML = `
+    ${cardThumb(video)}
+    <span class="category-label">${escapeHtml(video.category || "Featured Signals")}<span class="source-badge">${escapeHtml(source.label)}</span></span>
+    <h3>${escapeHtml(video.title || "Untitled RayTube Broadcast")}</h3>
+    <p>${escapeHtml(video.description || "A RayTube broadcast.")}</p>
+    <p><strong>CREATORS:</strong> ${escapeHtml(video.creators || "James & Logos")}</p>
+    <span class="watch-here">${video.isIntro ? "Play welcome signal" : (source.type === "youtube" ? "Play YouTube pipe" : "Play RayTube native")}</span>
+  `;
+  card.addEventListener("click", () => openPlayer(video));
+  card.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openPlayer(video);
+    }
+  });
+  grid.appendChild(card);
 }
 
 function renderGrid(page = currentRackPage) {
@@ -3036,44 +3115,12 @@ function renderGrid(page = currentRackPage) {
 
   grid.innerHTML = "";
 
+  if (currentRackPage === 1 && typeof introVideo !== "undefined" && hasVideo(introVideo)) {
+    appendVideoCard(grid, introVideo, "intro-card");
+  }
+
   visibleVideos.forEach(video => {
-    const source = videoSource(video);
-    const slotNumber = video.slot || "";
-
-    if (source.type === "none") {
-      const empty = document.createElement("article");
-      empty.className = "video-card empty-slot";
-      empty.innerHTML = `
-        <div>
-          <span class="slot-number">Slot ${slotNumber}</span>
-          <span class="slot-help">Paste a YouTube link or RayTube MP4 link into this slot in index.html</span>
-        </div>
-      `;
-      grid.appendChild(empty);
-      return;
-    }
-
-    const card = document.createElement("article");
-    card.className = "video-card";
-    card.tabIndex = 0;
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-label", "Play " + (video.title || "RayTube Broadcast") + " on RayTube");
-    card.innerHTML = `
-      ${cardThumb(video)}
-      <span class="category-label">${escapeHtml(video.category || "Featured Signals")}<span class="source-badge">${escapeHtml(source.label)}</span></span>
-      <h3>${escapeHtml(video.title || "Untitled RayTube Broadcast")}</h3>
-      <p>${escapeHtml(video.description || "A RayTube broadcast.")}</p>
-      <p><strong>CREATORS:</strong> ${escapeHtml(video.creators || "James & Logos")}</p>
-      <span class="watch-here">${source.type === "youtube" ? "Play YouTube pipe" : "Play RayTube native"}</span>
-    `;
-    card.addEventListener("click", () => openPlayer(video));
-    card.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openPlayer(video);
-      }
-    });
-    grid.appendChild(card);
+    appendVideoCard(grid, video);
   });
 
   renderRackControls(totalPages);
@@ -3124,6 +3171,22 @@ function changeRackPage(page) {
   }
 }
 
+function maybeOpenIntroOnce() {
+  if (typeof introVideo === "undefined" || !hasVideo(introVideo)) return;
+
+  const storageKey = "raytubeMascotIntroSeen";
+  try {
+    if (localStorage.getItem(storageKey) === "yes") return;
+    localStorage.setItem(storageKey, "yes");
+  } catch {
+    return;
+  }
+
+  window.setTimeout(() => {
+    openPlayer(introVideo, true);
+  }, 1200);
+}
+
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") closePlayer();
 });
@@ -3134,6 +3197,7 @@ document.getElementById("player-modal").addEventListener("click", event => {
 
 renderFeatured();
 renderGrid();
+maybeOpenIntroOnce();
 </script>
 
 <a class="floating-top" href="#top" aria-label="Back to top">↑ Top</a>
